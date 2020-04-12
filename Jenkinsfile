@@ -1,6 +1,6 @@
 #!groovy
 
-@Library('github.com/teecke/jenkins-pipeline-library@v3.4.1') _
+@Library('github.com/tpbtools/jenkins-pipeline-library@v3.5.2') _
 
 // Initialize global config
 cfg = jplConfig('jpl', 'groovy', '', [email: env.CI_NOTIFY_EMAIL_TARGETS])
