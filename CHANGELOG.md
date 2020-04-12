@@ -1,5 +1,30 @@
 # Changelog
 
+## v4.0.0 (2020-04-12)
+
+### Changes
+
+#### Breaking
+
+* Change teecke dependences with tpb ones ([97c7b0e](https://github.com/tpbtools/jenkins-pipeline-library/commit/97c7b0e))
+
+#### Build
+
+* Update Auto Release Log adding v4.0.0 info with JPL ([29e26ee](https://github.com/tpbtools/jenkins-pipeline-library/commit/29e26ee))
+* Use tpbtools jpl v3.5.3 ([c3ec06d](https://github.com/tpbtools/jenkins-pipeline-library/commit/c3ec06d))
+
+#### Docs
+
+* Update README.md and Jenkins doc help files ([d98c5bd](https://github.com/tpbtools/jenkins-pipeline-library/commit/d98c5bd))
+* Change template refereces to tpb ([4ea4bb8](https://github.com/tpbtools/jenkins-pipeline-library/commit/4ea4bb8))
+* Change teecke refereces to tpb ([6f5d2d3](https://github.com/tpbtools/jenkins-pipeline-library/commit/6f5d2d3))
+* Upgrade license info ([5fded85](https://github.com/tpbtools/jenkins-pipeline-library/commit/5fded85))
+* Generate v3.5.3 changelog with JPL ([352ed10](https://github.com/tpbtools/jenkins-pipeline-library/commit/352ed10))
+
+### Authors
+
+* Pedro Amador
+
 ## v3.5.3 (2020-04-12)
 
 ### Changes
