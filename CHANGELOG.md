@@ -1,5 +1,26 @@
 # Changelog
 
+## v3.5.3 (2020-04-12)
+
+### Changes
+
+#### Update
+
+* Enable jplBuildAPK test only under local test execution ([3fe5d30](https://github.com/tpbtools/jenkins-pipeline-library/commit/3fe5d30))
+
+#### Build
+
+* Update Auto Release Log adding v3.5.3 info with JPL ([d025340](https://github.com/tpbtools/jenkins-pipeline-library/commit/d025340))
+* Use tpbtools jpl v3.5.2 ([6642211](https://github.com/tpbtools/jenkins-pipeline-library/commit/6642211))
+
+#### Docs
+
+* Generate v3.5.2 changelog with JPL ([c2ee03f](https://github.com/tpbtools/jenkins-pipeline-library/commit/c2ee03f))
+
+### Authors
+
+* Pedro Amador
+
 ## v3.5.2 (2020-04-12)
 
 ### Changes
