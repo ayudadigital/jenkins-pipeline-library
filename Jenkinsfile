@@ -9,6 +9,8 @@ def publishDocumentation() {
     sh """
     make
     git add README.md vars/*.txt
+    git config --local user.name 'Jenkins'
+    git config --local user.email 'jenkins@ci'
     git commit -m 'Docs: Update README.md and Jenkins doc help files' || true
     git push -u origin ${env.BRANCH_NAME} || true
     """
