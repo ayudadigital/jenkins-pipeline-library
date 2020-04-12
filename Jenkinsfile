@@ -55,6 +55,9 @@ pipeline {
         always {
             jplPostBuild(cfg)
         }
+        failure {
+            deleteDir() /* clean up workspace on failure */
+        }
     }
 
     options {
