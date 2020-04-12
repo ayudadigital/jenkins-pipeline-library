@@ -3,7 +3,7 @@
 @Library('github.com/teecke/jenkins-pipeline-library@v3.4.1') _
 
 // Initialize global config
-cfg = jplConfig('jpl', 'groovy', '', [email: env.CITEECKE_NOTIFY_EMAIL_TARGETS])
+cfg = jplConfig('jpl', 'groovy', '', [email: env.CI_NOTIFY_EMAIL_TARGETS])
 
 def publishDocumentation() {
     sh """
