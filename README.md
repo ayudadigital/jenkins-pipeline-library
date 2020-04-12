@@ -1,4 +1,4 @@
-[![Build Status](https://jenkins.teecke.com/buildStatus/icon?job=github-open-teecke%2Fjenkins-pipeline-library%2Fdevelop)](https://jenkins.teecke.com/job/github-open-teecke/job/jenkins-pipeline-library/job/develop/)
+[![Build Status](https://jenkins.ticparabien.org/buildStatus/icon?job=tpbtools%2Fjenkins-pipeline-library%2Fdevelop)](https://jenkins.ticparabien.org/job/tpbtools/job/jenkins-pipeline-library/job/develop/)
 
 ## Description
 
@@ -13,7 +13,7 @@ This helpers are designed to be used in "Multibranch Pipeline" Jenkins job type,
 
 Add this line at the top of your Jenkinsfile
 
-    @Library('github.com/teecke/jenkins-pipeline-library') _
+    @Library('github.com/tpbtools/jenkins-pipeline-library') _
 
 Then you can use the helpers in your script
 
@@ -26,7 +26,7 @@ TBD
 ```groovy
 #!groovy
 
-@Library('github.com/teecke/jenkins-pipeline-library') _
+@Library('github.com/tpbtools/jenkins-pipeline-library') _
 
 // Initialize cfg
 cfg = jplConfig('project-alias', 'android', 'JIRAPROJECTKEY', [hipchat:'The-Project,Jenkins QA', slack:'#the-project,#integrations', email:'the-project@example.com,dev-team@example.com,qa-team@example.com'])
@@ -141,26 +141,6 @@ cfg usage:
 * cfg.applivery[:] hashmap
 * cfg.releaseTag
 
-### jplBuild
-
-Build iOS / Android app with Fastlane
-
-- Android app will build using docker into Jenkins
-- iOS app will build with fastlane directly
-
-Both builds are based on jpl project configuration
-
-Parameters:
-
-* cfg jplConfig class object
-* string command What is the command to be executed in the build
-
-Example: "./gradlew clean assembleDebug"
-
-cfg usage:
-
-* cfg.targetPlatform
-
 ### jplBuildAPK
 
 Build APK with Fastlane within docker into Jenkins, based on jpl project configuration
@@ -193,6 +173,26 @@ cfg usage:
   This function need the installation of "kd" script of docker-command-launcher
   Review https://github.com/kairops/docker-command-launcher project
 
+
+### jplBuild
+
+Build iOS / Android app with Fastlane
+
+- Android app will build using docker into Jenkins
+- iOS app will build with fastlane directly
+
+Both builds are based on jpl project configuration
+
+Parameters:
+
+* cfg jplConfig class object
+* string command What is the command to be executed in the build
+
+Example: "./gradlew clean assembleDebug"
+
+cfg usage:
+
+* cfg.targetPlatform
 
 ### jplBuildIPA
 
