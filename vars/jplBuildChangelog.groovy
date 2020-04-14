@@ -12,7 +12,7 @@
   * cfg.BRNACH_NAME
 
   This function need the installation of "kd" script of docker-command-launcher
-  Review https://github.com/kairops/docker-command-launcher project
+  Review https://github.com/tpbtools/docker-command-launcher project
 
 */
 def call(cfg, String format = 'md', String filename = 'CHANGELOG.md') {
