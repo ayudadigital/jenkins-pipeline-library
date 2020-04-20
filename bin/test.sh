@@ -82,7 +82,7 @@ for item in jenkins-dind jenkins-agent1 jenkins-agent2; do
     docker-compose exec -u jenkins -T ${item} cp -Rp /opt/jpl-source/ /tmp/jenkins-pipeline-library/
     #docker-compose exec -u jenkins -T jenkins-agent1 cp -Rp /opt/jpl-source/ /tmp/jenkins-pipeline-library/
     #docker-compose exec -u jenkins -T jenkins-agent2 cp -Rp /opt/jpl-source/ /tmp/jenkins-pipeline-library/
-    runWithinDocker ${item} "rm -f /tmp/jenkins-pipeline-library/.git/hooks/* && git config --global push.default simple && git config --global user.email 'redpandaci@gmail.com' && git config --global user.name 'Red Panda CI'"
+    runWithinDocker ${item} "rm -f /tmp/jenkins-pipeline-library/.git/hooks/* && git config --global push.default simple && git config --global user.email 'jenkins@ci' && git config --global user.name 'Jenkins'"
     if [[ "$1" == "local" ]] && [[ "$(git status --porcelain)" != "" ]]
     then
         echo "# Local test requested: Commit local jpl changes in ${item}"
@@ -117,7 +117,7 @@ then
     runTest "jplDockerPushTest"
     runTest "jplPromoteCodeHappyTest"
     runTest "jplPromoteBuildTest" 4
-    [ "$1" != "local" ] && runTest "jplBuildAPKTest"
+    [ "$1" == "local" ] && runTest "jplBuildAPKTest"
     runTest "jplBuildIPAHappyTest"
     runTest "jplMakeReleaseHappyTest"
     runTest "jplCloseReleaseTest"

@@ -12,7 +12,7 @@ done
 )"
 
 cat << EOF
-[![Build Status](https://jenkins.teecke.com/buildStatus/icon?job=github-open-teecke%2Fjenkins-pipeline-library%2Fdevelop)](https://jenkins.teecke.com/job/github-open-teecke/job/jenkins-pipeline-library/job/develop/)
+[![Build Status](https://jenkins.ticparabien.org/buildStatus/icon?job=tpbtools%2Fjenkins-pipeline-library%2Fdevelop)](https://jenkins.ticparabien.org/job/tpbtools/job/jenkins-pipeline-library/job/develop/)
 
 ## Description
 
@@ -27,7 +27,7 @@ This helpers are designed to be used in "Multibranch Pipeline" Jenkins job type,
 
 Add this line at the top of your Jenkinsfile
 
-    @Library('github.com/teecke/jenkins-pipeline-library') _
+    @Library('github.com/tpbtools/jenkins-pipeline-library') _
 
 Then you can use the helpers in your script
 
@@ -40,7 +40,7 @@ TBD
 \`\`\`groovy
 #!groovy
 
-@Library('github.com/teecke/jenkins-pipeline-library') _
+@Library('github.com/tpbtools/jenkins-pipeline-library') _
 
 // Initialize cfg
 cfg = jplConfig('project-alias', 'android', 'JIRAPROJECTKEY', [hipchat:'The-Project,Jenkins QA', slack:'#the-project,#integrations', email:'the-project@example.com,dev-team@example.com,qa-team@example.com'])
