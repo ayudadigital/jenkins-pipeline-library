@@ -23,7 +23,7 @@ We're glad to get pull request if any functionality is missing or something is b
 
 * Explain the issue that your PR is solving - or link to an existing issue
 * Make sure that all existing tests pass
-* Make sure you followed [coding guidelines](https://github.com/tpbtools/jenkins-pipeline-library/blob/master/CONTRIBUTING.md#coding-guidelines)
+* Make sure you followed [coding guidelines](https://github.com/ayudadigital/jenkins-pipeline-library/blob/master/CONTRIBUTING.md#coding-guidelines)
 * Add some tests for your new functionality or a test exhibiting the bug you are solving. Ideally all new tests should not pass _without_ your changes.
 
 Still interested? Coolio! Here is how to get started:
@@ -34,17 +34,17 @@ Makes sure `docker` is installed.
 
 If running on macOS, install [Docker for Mac](https://docs.docker.com/docker-for-mac/).
 
-Now pull `tpbtools/jenkins-dind` docker image
+Now pull `ayudadigital/jenkins-dind` docker image
 
 ```sh
-docker pull tpbtools/jenkins-dind
+docker pull ayudadigital/jenkins-dind
 ```
 
 ### 2. Run the tests
 
-All tests scripts and jobs are located in the `test` folder, and are executed with "bin/test.sh" script within `tpbtools/jenkins-dind` docker container
+All tests scripts and jobs are located in the `test` folder, and are executed with "bin/test.sh" script within `ayudadigital/jenkins-dind` docker container
 
-You can run all tests in your workstations as if they run in Jenkins. These tests are executed in `tpbtools/jenkins-dind` docker image <https://hub.docker.com/r/tpbtools/jenkins-dind/> and uses a docker container with a time box run of 300 seconds. After the tests, or reaching the timeout, the container will be destroyed
+You can run all tests in your workstations as if they run in Jenkins. These tests are executed in `ayudadigital/jenkins-dind` docker image <https://hub.docker.com/r/ayudadigital/jenkins-dind/> and uses a docker container with a time box run of 300 seconds. After the tests, or reaching the timeout, the container will be destroyed
 
 ```console
 $ bin/test.sh
@@ -107,7 +107,7 @@ $ echo $?
 0
 $ docker ps -a
 CONTAINER ID        IMAGE                     COMMAND                  CREATED             STATUS              PORTS                            NAMES
-525dc9e86eb6        tpbtools/jenkins-dind   "timeout 0 /usr/bi..."   2 minutes ago       Up About a minute   22/tcp, 0.0.0.0:8080->8080/tcp   stupefied_keller
+525dc9e86eb6        ayudadigital/jenkins-dind   "timeout 0 /usr/bi..."   2 minutes ago       Up About a minute   22/tcp, 0.0.0.0:8080->8080/tcp   stupefied_keller
 $ docker kill stupefied_keller 
 stupefied_keller
 $ docker ps -a
