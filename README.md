@@ -171,7 +171,7 @@ cfg usage:
   * cfg.BRNACH_NAME
 
   This function need the installation of "kd" script of docker-command-launcher
-  Review https://github.com/kairops/docker-command-launcher project
+  Review https://github.com/ayudadigital/docker-command-launcher project
 
 
 ### jplBuild
@@ -375,7 +375,7 @@ Make new release automatically
 
 The function will:
 
-- Calculate the next release tag using "get-next-release-number" docker command https://github.com/kairops/dc-get-next-release-number
+- Calculate the next release tag using "get-next-release-number" docker command https://github.com/ayudadigital/dc-get-next-release-number
 - Build the changelog
 - Append a new line in "jpl-makeRelease.log" file with the release information (tag name and timestamp)
 - Publish the changes to the repository (`git push`) on the develop branch
