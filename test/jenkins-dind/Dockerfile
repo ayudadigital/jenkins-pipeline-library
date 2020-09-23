@@ -1,4 +1,4 @@
-ARG TAG=2.204.3
+ARG TAG=2.249.1
 FROM ayudadigital/jenkins-dind:${TAG}
 RUN apk add --no-cache rsync openjdk8 jq
 USER jenkins

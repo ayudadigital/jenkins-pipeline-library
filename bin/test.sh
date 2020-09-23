@@ -110,9 +110,7 @@ runWithinDocker jenkins-dind "ssh -o StrictHostKeyChecking=no -p 2222 localhost 
 # Run tests
 if [[ ${doTests} == "true" ]]
 then
-    runTest "jplCheckoutSCMTest"
     runTest "jplStartTest"
-    runTest "jplGitCacheHappyTest"
     runTest "jplDockerBuildTest"
     runTest "jplDockerPushTest"
     runTest "jplPromoteCodeHappyTest"

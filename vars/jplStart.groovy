@@ -18,7 +18,6 @@ Parameters:
 jpl usage:
 
 * jplBuildChangeLog
-* jplCheckoutSCM
 * jplValidateCommitMessages
 
 cfg usage:
@@ -31,12 +30,7 @@ def call(cfg) {
     if (cfg.flags.isJplStarted) {
         error ("ERROR: jplStart already executed")
     }
-    jplCheckoutSCM(cfg)
-    cfg.lastTag = sh (
-        script: "git describe --abbrev=0 --tags||echo ''",
-        returnStdout: true
-    ).trim()
-    if (cfg.commitValidation.enabled && cfg.BRANCH_NAME.startsWith('PR')) {
+    if (cfg.commitValidation.enabled && (cfg.BRANCH_NAME.startsWith('PR-') || cfg.BRANCH_NAME.startsWith('MR-'))) {
         jplValidateCommitMessages(cfg)
     }
     // Build, archive and attach HTML changelog report to the build

@@ -25,7 +25,10 @@ def call(cfg) {
     if (!(cfg.BRANCH_NAME.startsWith('release/v') || cfg.BRANCH_NAME.startsWith('hotfix/v'))) {
         error "The reposisoty must be on release/v* or hotfix/v* branch"
     }
-    jplCheckoutSCM(cfg)
+    sh """
+    grep '\\+refs/heads/\\*:refs/remotes/origin/\\*' .git/config -q || git config --add remote.origin.fetch +refs/heads/*:refs/remotes/origin/*
+    git fetch -p
+    """
     tag = cfg.BRANCH_NAME.split("/")[1]
     tagMessage = cfg.BRANCH_NAME.startsWith('release/v') ? 'Release' : 'Hotfix'
     // Download ci-scripts

@@ -46,6 +46,8 @@ def call(cfg, boolean promoteBuild = false) {
         // It should be placed in a Docker Command https://github.com/ayudadigital/docker-command-launcher in the future
         sh """
         git clean -f -d
+        grep '\\+refs/heads/\\*:refs/remotes/origin/\\*' .git/config -q || git config --add remote.origin.fetch +refs/heads/*:refs/remotes/origin/*
+        git fetch -p
         git config --local user.name 'Jenkins'
         git config --local user.email 'jenkins@ci'
         git branch ${nextReleaseBranch} -D || true

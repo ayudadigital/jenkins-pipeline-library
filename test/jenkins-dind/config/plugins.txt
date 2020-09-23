@@ -8,7 +8,6 @@ embeddable-build-status:latest
 file-operations:latest
 git:latest
 github-branch-source:latest
-github-organization-folder:latest
 github:latest
 htmlpublisher:latest
 jira-steps:latest

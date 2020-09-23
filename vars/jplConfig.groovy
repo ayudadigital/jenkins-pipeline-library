@@ -66,13 +66,9 @@
         int quantity                Number of commits to be checked                 (default: 1)
 
   * Hashmap changelog: Changelog building configuration
-        boolean enabled             Automatically build changelog file              (default: true)
+        boolean enabled             Automatically build changelog file              (default: false)
                                     * Archive as artifact build on every commit
                                     * Build and commit on jplCloseRelease
-
-  * Hashmap gitCache: Git cache configuration
-        boolean enabled             Git cache status                                (default: true)
-        String path                 Path to git cache files                         (default: ".jpl_temp/jpl-git-cache/")
 
   Other options for internal use:
   * Hashmap promoteBuild: Promote build workflow configuration
@@ -157,18 +153,12 @@ def call (projectName = 'project', targetPlatform = 'any', jiraProjectKey = '', 
 
     //
     cfg.changelog                                   = [:]
-        cfg.changelog.enabled                       = true
-
-    //
-    cfg.gitCache                                    = [:]
-        cfg.gitCache.enabled                        = false
-        cfg.gitCache.path                           = ".jpl_temp/git-cache"
-        cfg.gitCache.gitCacheProjectRelativePath    = "${cfg.gitCache.path}/${cfg.projectName}-${cfg.targetPlatform}"
+        cfg.changelog.enabled                       = false
 
     //-----------------------------------------//
 
     //
-    cfg.dockerFunctionPrefix                        = "docker run -i --rm -v jpl-cache:/var/lib/docker"
+    cfg.dockerFunctionPrefix                        = "docker run -i --rm "
     cfg.promoteBuild                                = [:]
         cfg.promoteBuild.enabled                    = false
         cfg.promoteBuild.timeoutHours               = 48
