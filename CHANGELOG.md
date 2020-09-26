@@ -1508,6 +1508,7 @@
 
 #### Fix
 
+* Next tag calculation in jplMakeRelease ([af3701a](https://github.com/ayudadigital/jenkins-pipeline-library/commit/af3701a))
 * Review and refactor tests ([c0977a4](https://github.com/ayudadigital/jenkins-pipeline-library/commit/c0977a4))
 * Use the right jenkins home path for test ([4a87229](https://github.com/ayudadigital/jenkins-pipeline-library/commit/4a87229))
 * Bug accesing system env var ([b563510](https://github.com/ayudadigital/jenkins-pipeline-library/commit/b563510))
@@ -1556,6 +1557,7 @@
 
 #### Build
 
+* Update Auto Release Log adding v0.1.0 info with JPL ([752f64f](https://github.com/ayudadigital/jenkins-pipeline-library/commit/752f64f))
 * Update Auto Release Log adding v0.1.0 info with JPL ([feba2d9](https://github.com/ayudadigital/jenkins-pipeline-library/commit/feba2d9))
 * Fix publish doc ([bdec641](https://github.com/ayudadigital/jenkins-pipeline-library/commit/bdec641))
 * Update Auto Release Log adding v0.1.0 info with JPL ([7fcbd4f](https://github.com/ayudadigital/jenkins-pipeline-library/commit/7fcbd4f))
@@ -1669,6 +1671,7 @@
 
 #### Docs
 
+* Generate v0.1.0 changelog with JPL ([adf5c98](https://github.com/ayudadigital/jenkins-pipeline-library/commit/adf5c98))
 * Generate v0.1.0 changelog with JPL ([f27d3c8](https://github.com/ayudadigital/jenkins-pipeline-library/commit/f27d3c8))
 * Update README.md and Jenkins doc help files ([56e5eae](https://github.com/ayudadigital/jenkins-pipeline-library/commit/56e5eae))
 * Generate v5.0.0 changelog with JPL ([9056334](https://github.com/ayudadigital/jenkins-pipeline-library/commit/9056334))
