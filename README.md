@@ -208,21 +208,6 @@ cfg usage:
 
 * cfg.archivePattern
 
-### jplCheckoutSCM
-
-Get the code from SCM and init
-Leave the repository on the actual branch, instead of "deatached"
-
-Parameters:
-
-* cfg jplConfig class object
-
-cfg uage:
-
-* cfg.BRANCH_NAME
-* cfg.repository.*
-* cfg.repository.branch
-
 ### jplCloseRelease
 
 Close release (Branches "release/v*" or "hotfix/v*")
@@ -311,13 +296,9 @@ cfg usage:
         int quantity                Number of commits to be checked                 (default: 1)
 
   * Hashmap changelog: Changelog building configuration
-        boolean enabled             Automatically build changelog file              (default: true)
+        boolean enabled             Automatically build changelog file              (default: false)
                                     * Archive as artifact build on every commit
                                     * Build and commit on jplCloseRelease
-
-  * Hashmap gitCache: Git cache configuration
-        boolean enabled             Git cache status                                (default: true)
-        String path                 Path to git cache files                         (default: ".jpl_temp/jpl-git-cache/")
 
   Other options for internal use:
   * Hashmap promoteBuild: Promote build workflow configuration
@@ -536,7 +517,6 @@ Parameters:
 jpl usage:
 
 * jplBuildChangeLog
-* jplCheckoutSCM
 * jplValidateCommitMessages
 
 cfg usage:

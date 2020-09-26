@@ -18,7 +18,6 @@ Parameters:
 jpl usage:
 
 * jplBuildChangeLog
-* jplCheckoutSCM
 * jplValidateCommitMessages
 
 cfg usage:
