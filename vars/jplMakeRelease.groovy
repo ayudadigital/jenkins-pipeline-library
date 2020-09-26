@@ -37,9 +37,6 @@ def call(cfg, boolean promoteBuild = false) {
         currentBuild.result = 'ABORTED'
         error ('jplMakeRelease: The build cannot be promoted because the cfg.poromoteBuild.enabled flag is not disables')
     }
-    nextReleaseNumber = sh (script: "kd get-next-release-number .", returnStdout: true).trim()
-    nextReleaseBranch="release/" + nextReleaseNumber
-    echo "Building next release: ${nextReleaseNumber}"
     sshagent (credentials: [cfg.makeReleaseCredentialsID]) {
 
         // Release build (does not require remote connection)
@@ -48,7 +45,11 @@ def call(cfg, boolean promoteBuild = false) {
         git clean -f -d
         grep '\\+refs/heads/\\*:refs/remotes/origin/\\*' .git/config -q || git config --add remote.origin.fetch +refs/heads/*:refs/remotes/origin/*
         git fetch -p
-        git config --local user.name 'Jenkins'
+        """
+        nextReleaseNumber = sh (script: "kd get-next-release-number .", returnStdout: true).trim()
+        nextReleaseBranch="release/" + nextReleaseNumber
+        echo "Building next release: ${nextReleaseNumber}"
+        sh """git config --local user.name 'Jenkins'
         git config --local user.email 'jenkins@ci'
         git branch ${nextReleaseBranch} -D || true
         git checkout -b ${nextReleaseBranch}

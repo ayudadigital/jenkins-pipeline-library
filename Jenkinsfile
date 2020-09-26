@@ -6,15 +6,17 @@
 cfg = jplConfig('jpl', 'groovy', '', [email: env.CI_NOTIFY_EMAIL_TARGETS])
 
 def publishDocumentation() {
-    sh """
-    git checkout ${env.BRANCH_NAME}
-    make
-    git add README.md vars/*.txt
-    git config --local user.name 'Jenkins'
-    git config --local user.email 'jenkins@ci'
-    git commit -m 'Docs: Update README.md and Jenkins doc help files' || true
-    git push -u origin ${env.BRANCH_NAME} || true
-    """
+    sshagent (credentials: [cfg.makeReleaseCredentialsID]) {
+        sh """
+        git checkout ${env.BRANCH_NAME}
+        make
+        git add README.md vars/*.txt
+        git config --local user.name 'Jenkins'
+        git config --local user.email 'jenkins@ci'
+        git commit -m 'Docs: Update README.md and Jenkins doc help files' || true
+        git push -u origin ${env.BRANCH_NAME} || true
+        """
+    }
 }
 
 pipeline {

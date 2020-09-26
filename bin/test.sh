@@ -61,7 +61,7 @@ fi
 # Main
 echo "# Start jenkins as a docker-compose daemon"
 if [ "$TAG" == "" ]; then
-    TAG="latest"
+    export TAG="latest"
 fi
 if [[ "$1" == "local" ]]; then
     BUILDOPTIONS=""
@@ -69,7 +69,7 @@ if [[ "$1" == "local" ]]; then
 else
     BUILDOPTIONS="--pull --no-cache"
 fi
-TAG=$TAG docker-compose build $BUILDOPTIONS
+docker-compose build $BUILDOPTIONS
 docker-compose up -d --force-recreate
 returnValue=$((returnValue + $?))
 id=$(docker-compose ps -q jenkins-dind)
