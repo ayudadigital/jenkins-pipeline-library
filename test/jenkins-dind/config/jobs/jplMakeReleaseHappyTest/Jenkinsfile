@@ -19,8 +19,7 @@ pipeline {
         stage ("jplMakeRelease Test - Prepare test") {
             steps {
                 echo "jplMakeRelease Test - Prepare test"
-                sh "git merge origin/master; git push"
-                deleteDir()
+                sh "git checkout release/new; git merge origin/master"
             }
         }
         stage ("jplMakeRelease Test - Make Release") {

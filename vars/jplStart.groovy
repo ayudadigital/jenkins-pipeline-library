@@ -33,6 +33,17 @@ def call(cfg) {
     if (cfg.commitValidation.enabled && (cfg.BRANCH_NAME.startsWith('PR-') || cfg.BRANCH_NAME.startsWith('MR-'))) {
         jplValidateCommitMessages(cfg)
     }
+    // Checkout code if the repository is configured
+    if (cfg.repository.url != '') {
+        if (cfg.repository.branch == '') {
+            git url: cfg.repository.url
+        }
+        else {
+            git branch: cfg.repository.branch, url: cfg.repository.url
+            sh "git branch --set-upstream-to origin/${cfg.repository.branch} ${cfg.repository.branch}"
+        }
+    }
+
     // Build, archive and attach HTML changelog report to the build
     if (cfg.changelog.enabled) {
         sh "mkdir -p ci-scripts/reports"

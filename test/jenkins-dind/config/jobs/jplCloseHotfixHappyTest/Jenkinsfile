@@ -19,8 +19,7 @@ pipeline {
         stage ("jplCloseHotfixHappy Test - Prepare test") {
             steps {
                 echo "jplCloseHotfixHappy Test - Prepare test"
-                sh "git merge origin/master; git push"
-                deleteDir()
+                sh "git checkout hotfix/v9.9.9-hotfix-1; git merge origin/master; git push"
             }
         }
         stage ("jplCloseHotfixHappy Test - Close Hotfix") {

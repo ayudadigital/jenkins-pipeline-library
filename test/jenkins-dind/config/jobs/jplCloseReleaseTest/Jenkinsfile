@@ -19,8 +19,7 @@ pipeline {
         stage ("jplCloseRelease Test - Prepare test") {
             steps {
                 echo "jplCloseRelease Test - Prepare test"
-                sh "git merge origin/master; git push"
-                deleteDir()
+                sh "git checkout release/v9.9.9; git merge origin/master; git push"
             }
         }
         stage ("jplCloseRelease Test - Close Release") {
