@@ -7,6 +7,7 @@ cfg = jplConfig('jpl', 'groovy', '', [email: env.CI_NOTIFY_EMAIL_TARGETS])
 
 def publishDocumentation() {
     sh """
+    git checkout ${env.BRANCH_NAME}
     make
     git add README.md vars/*.txt
     git config --local user.name 'Jenkins'
