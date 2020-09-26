@@ -1,5 +1,30 @@
 # Changelog
 
+## v6.0.0 (2020-09-26)
+
+### Changes
+
+#### Breaking
+
+* Major refactor, removing jplCheckoutSCM, cfg.gitCache, disabling changelog by default and adding gitlab MR compatibility ([fd84c0c](https://github.com/ayudadigital/jenkins-pipeline-library/commit/fd84c0c))
+
+#### Fix
+
+* Review and refactor tests ([c0977a4](https://github.com/ayudadigital/jenkins-pipeline-library/commit/c0977a4))
+
+#### Build
+
+* Update Auto Release Log adding v0.1.0 info with JPL ([7fcbd4f](https://github.com/ayudadigital/jenkins-pipeline-library/commit/7fcbd4f))
+
+#### Docs
+
+* Update README.md and Jenkins doc help files ([56e5eae](https://github.com/ayudadigital/jenkins-pipeline-library/commit/56e5eae))
+* Generate v5.0.0 changelog with JPL ([9056334](https://github.com/ayudadigital/jenkins-pipeline-library/commit/9056334))
+
+### Authors
+
+* Pedro Amador
+
 ## v5.0.0 (2020-04-24)
 
 ### Changes
@@ -1531,6 +1556,8 @@
 
 #### Build
 
+* Update Auto Release Log adding v0.1.0 info with JPL ([feba2d9](https://github.com/ayudadigital/jenkins-pipeline-library/commit/feba2d9))
+* Fix publish doc ([bdec641](https://github.com/ayudadigital/jenkins-pipeline-library/commit/bdec641))
 * Update Auto Release Log adding v0.1.0 info with JPL ([7fcbd4f](https://github.com/ayudadigital/jenkins-pipeline-library/commit/7fcbd4f))
 * Update Auto Release Log adding v5.0.0 info with JPL ([d7b9154](https://github.com/ayudadigital/jenkins-pipeline-library/commit/d7b9154))
 * Use ayudadigital jpl v4.0.0 ([8040b94](https://github.com/ayudadigital/jenkins-pipeline-library/commit/8040b94))
@@ -1642,6 +1669,7 @@
 
 #### Docs
 
+* Generate v0.1.0 changelog with JPL ([f27d3c8](https://github.com/ayudadigital/jenkins-pipeline-library/commit/f27d3c8))
 * Update README.md and Jenkins doc help files ([56e5eae](https://github.com/ayudadigital/jenkins-pipeline-library/commit/56e5eae))
 * Generate v5.0.0 changelog with JPL ([9056334](https://github.com/ayudadigital/jenkins-pipeline-library/commit/9056334))
 * Update README.md and Jenkins doc help files ([4c9c595](https://github.com/ayudadigital/jenkins-pipeline-library/commit/4c9c595))
