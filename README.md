@@ -141,26 +141,6 @@ cfg usage:
 * cfg.applivery[:] hashmap
 * cfg.releaseTag
 
-### jplBuild
-
-Build iOS / Android app with Fastlane
-
-- Android app will build using docker into Jenkins
-- iOS app will build with fastlane directly
-
-Both builds are based on jpl project configuration
-
-Parameters:
-
-* cfg jplConfig class object
-* string command What is the command to be executed in the build
-
-Example: "./gradlew clean assembleDebug"
-
-cfg usage:
-
-* cfg.targetPlatform
-
 ### jplBuildAPK
 
 Build APK with Fastlane within docker into Jenkins, based on jpl project configuration
@@ -193,6 +173,26 @@ cfg usage:
   This function need the installation of "kd" script of docker-command-launcher
   Review https://github.com/ayudadigital/docker-command-launcher project
 
+
+### jplBuild
+
+Build iOS / Android app with Fastlane
+
+- Android app will build using docker into Jenkins
+- iOS app will build with fastlane directly
+
+Both builds are based on jpl project configuration
+
+Parameters:
+
+* cfg jplConfig class object
+* string command What is the command to be executed in the build
+
+Example: "./gradlew clean assembleDebug"
+
+cfg usage:
+
+* cfg.targetPlatform
 
 ### jplBuildIPA
 
