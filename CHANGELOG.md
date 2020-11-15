@@ -1,5 +1,23 @@
 # Changelog
 
+## v6.0.2 (2020-11-15)
+
+### Changes
+
+#### Build
+
+* Update Auto Release Log adding v6.0.2 info with JPL ([f8d7020](https://github.com/ayudadigital/jenkins-pipeline-library/commit/f8d7020))
+
+#### Docs
+
+* Update README.md and Jenkins doc help files ([d9e7f84](https://github.com/ayudadigital/jenkins-pipeline-library/commit/d9e7f84))
+* Update README.md and Jenkins doc help files ([23570f7](https://github.com/ayudadigital/jenkins-pipeline-library/commit/23570f7))
+* Generate v6.0.1 changelog with JPL ([cfc9352](https://github.com/ayudadigital/jenkins-pipeline-library/commit/cfc9352))
+
+### Authors
+
+* 
+
 ## v6.0.1 (2020-09-26)
 
 ### Changes
