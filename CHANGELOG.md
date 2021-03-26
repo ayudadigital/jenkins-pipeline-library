@@ -1,5 +1,34 @@
 # Changelog
 
+## v6.1.0 (2021-03-26)
+
+### Changes
+
+#### Upgrade
+
+* Adapt tests to jenkins 2.277.1 version ([69c1ed6](https://github.com/ayudadigital/jenkins-pipeline-library/commit/69c1ed6))
+
+#### Fix
+
+* Change permissions on the right ssh key directory ([095102b](https://github.com/ayudadigital/jenkins-pipeline-library/commit/095102b))
+* Change permissions of ssh key files before the docker build ([f6f35d6](https://github.com/ayudadigital/jenkins-pipeline-library/commit/f6f35d6))
+* Use chmod with root user in test Dockerfile ([f89234d](https://github.com/ayudadigital/jenkins-pipeline-library/commit/f89234d))
+* Change permissions of .ssh key file for tests ([67eebf2](https://github.com/ayudadigital/jenkins-pipeline-library/commit/67eebf2))
+
+#### Build
+
+* Update Auto Release Log adding v6.1.0 info with JPL ([d9b3296](https://github.com/ayudadigital/jenkins-pipeline-library/commit/d9b3296))
+* Typo in jpl v6.0.2 ([fbd26cb](https://github.com/ayudadigital/jenkins-pipeline-library/commit/fbd26cb))
+* Use jpl v6.0.2 ([61481c0](https://github.com/ayudadigital/jenkins-pipeline-library/commit/61481c0))
+
+#### Docs
+
+* Generate v6.0.2 changelog with JPL ([5f19a6d](https://github.com/ayudadigital/jenkins-pipeline-library/commit/5f19a6d))
+
+### Authors
+
+* Pedro Amador
+
 ## v6.0.2 (2020-11-15)
 
 ### Changes
