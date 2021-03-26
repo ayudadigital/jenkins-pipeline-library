@@ -1,6 +1,6 @@
 #!groovy
 
-@Library('github.com/ayudadigital/jenkins-pipeline-library@refactor') _
+@Library('github.com/ayudadigital/jenkins-pipeline-library@6.0.2') _
 
 // Initialize global config
 cfg = jplConfig('jpl', 'groovy', '', [email: env.CI_NOTIFY_EMAIL_TARGETS])
