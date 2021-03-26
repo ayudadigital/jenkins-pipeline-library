@@ -69,6 +69,8 @@ if [[ "$1" == "local" ]]; then
 else
     BUILDOPTIONS="--pull --no-cache"
 fi
+chmod 600 test/jenkins-dind/config/.ssh/*
+chmod 700 test/jenkins-dind/config
 docker-compose build $BUILDOPTIONS
 docker-compose up -d --force-recreate
 returnValue=$((returnValue + $?))
