@@ -1,10 +1,10 @@
 ARG TAG=2.249.1
 FROM ayudadigital/jenkins-dind:${TAG}
 RUN apk add --no-cache rsync openjdk8 jq
-USER jenkins
 COPY --chown=jenkins:jenkins config /var/jenkins_home/
 RUN chmod 600 /var/jenkins_home/.ssh/* && \
     chmod 700 /var/jenkins_home/.ssh
+USER jenkins
 RUN java -jar /usr/share/jenkins/jenkins.war --version > /var/jenkins_home/jenkins.install.UpgradeWizard.state
 RUN install-plugins.sh < /var/jenkins_home/plugins.txt
 USER root
