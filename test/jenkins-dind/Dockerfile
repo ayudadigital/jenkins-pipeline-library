@@ -3,6 +3,7 @@ FROM ayudadigital/jenkins-dind:${TAG}
 RUN apk add --no-cache rsync openjdk8 jq
 USER jenkins
 COPY --chown=jenkins:jenkins config /var/jenkins_home/
+RUN java -jar /usr/share/jenkins/jenkins.war --version > /var/jenkins_home/jenkins.install.UpgradeWizard.state
 RUN install-plugins.sh < /var/jenkins_home/plugins.txt
 USER root
 RUN wget https://raw.githubusercontent.com/ayudadigital/docker-command-launcher/master/kd.sh -O /usr/sbin/kd -q && \

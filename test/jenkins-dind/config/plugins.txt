@@ -1,9 +1,6 @@
 ansicolor:latest
 antisamy-markup-formatter:latest
-bitbucket:latest
-blueocean:latest
-build-monitor-plugin:latest
-cloudbees-bitbucket-branch-source:latest
+docker-workflow:latest
 embeddable-build-status:latest
 file-operations:latest
 git:latest
@@ -17,5 +14,4 @@ simple-theme-plugin:latest
 slack:latest
 sonar:latest
 ssh-agent:latest
-thinBackup:latest
 timestamper:latest

@@ -27,7 +27,7 @@ function runTest () {
         echo -e "\t\t(Force pass with assert=true)"
         return 0
     fi
-    docker exec ${id} bash -c "ssh -o StrictHostKeyChecking=no -p 2222 localhost build ${testName} -s"
+    docker-compose exec -u jenkins -T jenkins-dind bash -c "ssh -o StrictHostKeyChecking=no -l admin -p 2222 localhost build ${testName} -s"
     if [[ "$?" -ne "${expectedResult}" ]]
     then
         returnValue=$((returnValue + 1))
@@ -100,12 +100,12 @@ runWithinDocker jenkins-dind "sleep 10 && curl --max-time 50 --retry 10 --retry-
 echo "# Prepare agents"
 for agent in agent1 agent2
 do
-    secret=$(docker-compose exec -T jenkins-dind /opt/jpl-source/bin/prepare_agent.sh ${agent})
+    secret=$(docker-compose exec -u jenkins -T jenkins-dind /opt/jpl-source/bin/prepare_agent.sh ${agent})
     docker-compose exec -u jenkins -d -T jenkins-${agent} jenkins-slave -url http://jenkins-dind:8080 ${secret} ${agent}
 done
 
 echo "# Reload Jenkins configuration"
-runWithinDocker jenkins-dind "ssh -o StrictHostKeyChecking=no -p 2222 localhost reload-configuration"
+runWithinDocker jenkins-dind "ssh -o StrictHostKeyChecking=no -l admin -p 2222 localhost reload-configuration"
 
 # Run tests
 if [[ ${doTests} == "true" ]]
