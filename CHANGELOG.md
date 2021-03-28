@@ -1,5 +1,30 @@
 # Changelog
 
+## v6.2.0 (2021-03-28)
+
+### Changes
+
+#### New
+
+* Add jplGetNextReleaseNumber ([8d8d31e](https://github.com/ayudadigital/jenkins-pipeline-library/commit/8d8d31e))
+
+#### Update
+
+* Set next release number in jplMakeRelease build job ([2e31f5b](https://github.com/ayudadigital/jenkins-pipeline-library/commit/2e31f5b))
+
+#### Build
+
+* Update Auto Release Log adding v6.2.0 info with JPL ([f688408](https://github.com/ayudadigital/jenkins-pipeline-library/commit/f688408))
+
+#### Docs
+
+* Update README.md and Jenkins doc help files ([f3aafcd](https://github.com/ayudadigital/jenkins-pipeline-library/commit/f3aafcd))
+* Generate v6.1.0 changelog with JPL ([30ef08b](https://github.com/ayudadigital/jenkins-pipeline-library/commit/30ef08b))
+
+### Authors
+
+* Pedro Amador
+
 ## v6.1.0 (2021-03-26)
 
 ### Changes
