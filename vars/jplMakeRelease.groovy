@@ -71,6 +71,10 @@ def call(cfg, boolean promoteBuild = false) {
         git push --tags
         """
 
+        // Set release number in job description
+        currentBuild.displayName = nextReleaseNumber
+        currentBuild.description = "Release " + nextReleaseNumber
+
         // Empty workspace directory for the next release
         deleteDir()
     }

@@ -14,7 +14,8 @@ def call(cfg) {
 
         sh """
         git clean -f -d
-        grep '\\+refs/heads/\\*:refs/remotes/origin/\\*' .git/config -q || git config --add remote.origin.fetch +refs/heads/*:refs/remotes/origin/*
+        git config --unset remote.origin.fetch
+        git config --add remote.origin.fetch +refs/heads/*:refs/remotes/origin/*
         git fetch -p
         """
         nextReleaseNumber = sh (script: "kd get-next-release-number .", returnStdout: true).trim()
