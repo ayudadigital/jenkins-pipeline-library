@@ -39,14 +39,9 @@ def call(cfg, boolean promoteBuild = false) {
     }
     sshagent (credentials: [cfg.makeReleaseCredentialsID]) {
 
-        // Release build (does not require remote connection)
+        // Release build
         // It should be placed in a Docker Command https://github.com/ayudadigital/docker-command-launcher in the future
-        sh """
-        git clean -f -d
-        grep '\\+refs/heads/\\*:refs/remotes/origin/\\*' .git/config -q || git config --add remote.origin.fetch +refs/heads/*:refs/remotes/origin/*
-        git fetch -p
-        """
-        nextReleaseNumber = sh (script: "kd get-next-release-number .", returnStdout: true).trim()
+        nextReleaseNumber = jplGetNextReleaseNumber(cfg)
         nextReleaseBranch="release/" + nextReleaseNumber
         echo "Building next release: ${nextReleaseNumber}"
         sh """git config --local user.name 'Jenkins'
