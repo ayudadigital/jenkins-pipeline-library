@@ -338,6 +338,18 @@ cfg usage:
 
 * cfg.projectName
 
+### jplGetNextReleaseNumber
+
+
+Calculate the next release tag using "get-next-release-number" docker command https://github.com/ayudadigital/dc-get-next-release-number
+
+Parameters:
+* cfg jplConfig class object
+
+cfg usage:
+
+* cfg.makeReleaseCredentialsID
+
 ### jplJIRA
 
 JIRA management
