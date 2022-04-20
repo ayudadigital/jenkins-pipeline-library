@@ -1,5 +1,27 @@
 # Changelog
 
+## v6.3.0 (2022-04-20)
+
+### Changes
+
+#### New
+
+* Add configurable head branch ([b56ea11](https://github.com/ayudadigital/jenkins-pipeline-library/commit/b56ea11))
+
+#### Build
+
+* Update Auto Release Log adding v6.3.0 info with JPL ([f938e60](https://github.com/ayudadigital/jenkins-pipeline-library/commit/f938e60))
+* Use jpl v6.2.0 ([9c999e2](https://github.com/ayudadigital/jenkins-pipeline-library/commit/9c999e2))
+
+#### Docs
+
+* Update README.md and Jenkins doc help files ([f396594](https://github.com/ayudadigital/jenkins-pipeline-library/commit/f396594))
+* Generate v6.2.0 changelog with JPL ([63c5085](https://github.com/ayudadigital/jenkins-pipeline-library/commit/63c5085))
+
+### Authors
+
+* Pedro Amador
+
 ## v6.2.0 (2021-03-28)
 
 ### Changes
