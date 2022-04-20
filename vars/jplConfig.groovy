@@ -12,6 +12,7 @@
   ---------------
   * String  projectName             Project alias / codename (with no spaces)       (default: "project")
   * String  BRANCH_NAME             Branch name                                     (default: env.BRANCH_NAME)
+  * String  headBranch              Head branch name                                (default: "master")
   * String  laneName                Fastlane lane name                              (default: related to branch name)
                                     The laneName is asigned to "[laneName]" part of the branch in case of "fastlane/[laneName]" branches
   * String  targetPlatform          Target platform, one of these                   (default: "any")
@@ -76,7 +77,7 @@
         boolean enabled             * Flag to promote build to release steps        (default: false)
 
 */
-def call (projectName = 'project', targetPlatform = 'any', jiraProjectKey = '', recipients = [hipchat:'',slack:'',email:'']) {
+def call (projectName = 'project', targetPlatform = 'any', jiraProjectKey = '', recipients = [hipchat:'',slack:'',email:''], headBranch = "master") {
     cfg = [:]
     //
     if (env.BRANCH_NAME == null) {
@@ -85,6 +86,7 @@ def call (projectName = 'project', targetPlatform = 'any', jiraProjectKey = '', 
     else {
         cfg.BRANCH_NAME = env.BRANCH_NAME
     }
+    cfg.headBranch                                  = headBranch
     cfg.projectName                                 = projectName
     if (cfg.BRANCH_NAME.startsWith('fastlane/')) {
         cfg.laneName                                = cfg.BRANCH_NAME.tokenize("/")[1]

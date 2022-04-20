@@ -1,7 +1,7 @@
 /**
 Close release (Branches "release/v*" or "hotfix/v*")
 
-Merge code from release/vX.Y.Z to "master" and "develop", then "push" to the repository.
+Merge code from release/vX.Y.Z to the head and "develop" branches, then "push" to the repository.
 Create new tag with "vX.Y.Z" to the commit
 
 The function uses "git promote" script
@@ -44,8 +44,8 @@ def call(cfg) {
         """
     }
 
-    // Promote to master
-    sh "ci-scripts/.jpl-scripts/bin/git-promote.sh -m 'Merge from ${cfg.BRANCH_NAME} with Red Panda JPL' ${cfg.BRANCH_NAME} master"
+    // Promote to head branch
+    sh "ci-scripts/.jpl-scripts/bin/git-promote.sh -m 'Merge from ${cfg.BRANCH_NAME} with Red Panda JPL' ${cfg.BRANCH_NAME} ${cfg.headBranch}"
     // Promote to develop
     sh "ci-scripts/.jpl-scripts/bin/git-promote.sh -m 'Merge from ${cfg.BRANCH_NAME} with Red Panda JPL' ${cfg.BRANCH_NAME} develop"
     // Release TAG from last non-merge commit of the branch
