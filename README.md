@@ -212,7 +212,7 @@ cfg usage:
 
 Close release (Branches "release/v*" or "hotfix/v*")
 
-Merge code from release/vX.Y.Z to "master" and "develop", then "push" to the repository.
+Merge code from release/vX.Y.Z to the head and "develop" branches, then "push" to the repository.
 Create new tag with "vX.Y.Z" to the commit
 
 The function uses "git promote" script
@@ -242,6 +242,7 @@ cfg usage:
   ---------------
   * String  projectName             Project alias / codename (with no spaces)       (default: "project")
   * String  BRANCH_NAME             Branch name                                     (default: env.BRANCH_NAME)
+  * String  headBranch              Head branch name                                (default: "master")
   * String  laneName                Fastlane lane name                              (default: related to branch name)
                                     The laneName is asigned to "[laneName]" part of the branch in case of "fastlane/[laneName]" branches
   * String  targetPlatform          Target platform, one of these                   (default: "any")

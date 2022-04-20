@@ -1,7 +1,7 @@
 
 Close release (Branches "release/v*" or "hotfix/v*")
 
-Merge code from release/vX.Y.Z to "master" and "develop", then "push" to the repository.
+Merge code from release/vX.Y.Z to the head and "develop" branches, then "push" to the repository.
 Create new tag with "vX.Y.Z" to the commit
 
 The function uses "git promote" script
