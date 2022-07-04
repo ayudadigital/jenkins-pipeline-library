@@ -13,6 +13,12 @@ function runWithinDocker () {
     returnValue=$((returnValue + $?))
 }
 
+function executeJenkinsCommand () {
+    command=$1
+    docker-compose exec -u jenkins -T jenkins-dind bash -c "java -Xmx512m -jar /tmp/jenkins-cli.jar -s http://localhost:8080 ${command}"
+    return $?
+}
+
 function runTest () {
     testName=$1
     echo "# Run ${testName} Test..."
@@ -27,7 +33,7 @@ function runTest () {
         echo -e "\t\t(Force pass with assert=true)"
         return 0
     fi
-    docker-compose exec -u jenkins -T jenkins-dind bash -c "ssh -o StrictHostKeyChecking=no -l admin -p 2222 localhost build ${testName} -s"
+    executeJenkinsCommand "build ${testName} -s"
     if [[ "$?" -ne "${expectedResult}" ]]
     then
         returnValue=$((returnValue + 1))
@@ -99,6 +105,9 @@ done
 echo "# Waiting for jenkins service to be initialized"
 runWithinDocker jenkins-dind "sleep 10 && curl --max-time 50 --retry 10 --retry-delay 5 --retry-max-time 32 http://localhost:8080 -s > /dev/null; sleep 10"
 
+echo "# Download jenkins cli"
+runWithinDocker jenkins-dind "wget http://localhost:8080/jnlpJars/jenkins-cli.jar -O /tmp/jenkins-cli.jar -q > /dev/null"
+
 echo "# Prepare agents"
 for agent in agent1 agent2
 do
@@ -107,7 +116,7 @@ do
 done
 
 echo "# Reload Jenkins configuration"
-runWithinDocker jenkins-dind "ssh -o StrictHostKeyChecking=no -l admin -p 2222 localhost reload-configuration"
+executeJenkinsCommand "reload-configuration"
 
 # Run tests
 if [[ ${doTests} == "true" ]]

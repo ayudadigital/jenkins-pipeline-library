@@ -1,6 +1,7 @@
 #!/bin/bash
 agent_name=$1
-cat <<EOF | ssh -o StrictHostKeyChecking=no -l admin -p 2222 localhost create-node ${agent_name}
+
+cat <<EOF | java -Xmx512m -jar /tmp/jenkins-cli.jar -s http://localhost:8080 create-node ${agent_name}
 <slave>
   <name>${agent_name}</name>
   <description>${agent_name}</description>
@@ -20,4 +21,4 @@ cat <<EOF | ssh -o StrictHostKeyChecking=no -l admin -p 2222 localhost create-no
 </slave>
 EOF
 
-echo 'println jenkins.model.Jenkins.instance.nodesObject.getNode("'${agent_name}'")?.computer?.jnlpMac' | ssh -o StrictHostKeyChecking=no -l admin -p 2222 localhost groovy =
+echo 'println jenkins.model.Jenkins.instance.nodesObject.getNode("'${agent_name}'")?.computer?.jnlpMac' | java -Xmx512m -jar /tmp/jenkins-cli.jar -s http://localhost:8080 groovy =
