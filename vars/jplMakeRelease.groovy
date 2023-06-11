@@ -13,7 +13,7 @@ The function will:
 Abort the build if:
 
 - The repository is on the "develop" branch. Or...
-- The promoteBuild.enabled flag is not true
+- The promoteBuild.enabled flag is not true (DEPRECATED: always promote build)
 
 You can use this function with a branch named "release/next", so it will do all the job for you when you do a push to the repository.
 
@@ -28,14 +28,10 @@ cfg usage:
 * cfg.notify
 * cfg.recipients
 */
-def call(cfg, boolean promoteBuild = false) {
+def call(cfg, boolean promoteBuild = true) {
     if (cfg.BRANCH_NAME == 'develop') {
         currentBuild.result = 'ABORTED'
         error ('jplMakeRelease: The repository cannot be on the "develop" branch')
-    }
-    if (!promoteBuild) {
-        currentBuild.result = 'ABORTED'
-        error ('jplMakeRelease: The build cannot be promoted because the cfg.poromoteBuild.enabled flag is not disables')
     }
     sshagent (credentials: [cfg.makeReleaseCredentialsID]) {
 

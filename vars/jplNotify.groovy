@@ -1,5 +1,5 @@
 /**
-Notify using multiple methods: hipchat, slack, email
+Notify using multiple methods: slack, email
 
 Parameters:
 
@@ -15,33 +15,25 @@ def call(cfg, String summary = '', String message = '') {
     jplConfig.checkInitializationStatus(cfg)
     switch (currentBuild.result) {
         case 'ABORTED':
-            hipchatColor = 'GRAY'
             slackColor = 'warning'
             break;
         case 'UNSTABLE':
-            hipchatColor = 'YELLOW'
             slackColor = 'warning'
             break;
         case 'FAILURE':
-            hipchatColor = 'RED'
             slackColor = 'danger'
             break;
         default: // SUCCESS and null
-            hipchatColor = 'GREEN'
             slackColor = 'good'
             break;
     }
-    summary = jplBuild.summary(summary)
-    message = jplBuild.description(message)
-    hipchatRooms = cfg.recipients.hipchat
+    summary = jplConfig.summary(summary)
+    message = jplConfig.description(message)
     slackChannels = cfg.recipients.slack
     emailRecipients = cfg.recipients.email
-    if (jplBuild.resultStatus() == 'SUCCESS') {
+    if (jplConfig.resultStatus() == 'SUCCESS') {
         slackChannels = ''
         emailRecipients = ''
-    }
-    if (hipchatRooms != "") {
-        hipchatSend color: hipchatColor, failOnError: true, room: hipchatRooms, message: "${summary}\n${message}", notify: true, server: 'api.hipchat.com', v2enabled: true
     }
     if (slackChannels != "") {
         slackSend channel: slackChannels, color: slackColor, message: "${summary}\n${message}"
