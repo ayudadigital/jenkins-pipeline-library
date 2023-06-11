@@ -35,7 +35,7 @@ Then you can use the helpers in your script
 
 TBD
 
-* Declarative Pipeline example (Android)
+* Declarative Pipeline example (backend)
 
 \`\`\`groovy
 #!groovy
@@ -43,7 +43,7 @@ TBD
 @Library('github.com/ayudadigital/jenkins-pipeline-library') _
 
 // Initialize cfg
-cfg = jplConfig('project-alias', 'android', 'JIRAPROJECTKEY', [hipchat:'The-Project,Jenkins QA', slack:'#the-project,#integrations', email:'the-project@example.com,dev-team@example.com,qa-team@example.com'])
+cfg = jplConfig('project-alias', 'backend', 'JIRAPROJECTKEY', [slack:'#the-project,#integrations', email:'the-project@example.com,dev-team@example.com,qa-team@example.com'])
 
 // The pipeline
 pipeline {
@@ -63,12 +63,6 @@ pipeline {
                 jplDockerPush(cfg, 'the-project/docker-image', 'https://registry.hub.docker.com', 'dockerhub-credentials', 'dockerfile-path')
             }
         }
-        stage ('Build') {
-            agent { label 'docker' }
-            steps  {
-                jplBuild(cfg)
-            }
-        }
         stage('Test') {
             agent { label 'docker' }
             when { expression { (env.BRANCH_NAME == 'develop') || env.BRANCH_NAME.startsWith('PR-') } }
@@ -76,25 +70,10 @@ pipeline {
                 jplSonarScanner(cfg)
             }
         }
-        stage ('Sign') {
-            agent { label 'docker' }
-            when { branch 'release/v*' }
-            steps  {
-                jplSigning(cfg, "git@github.org:the-project/sign-repsotory.git", "the-project", "app/build/outputs/apk/the-project-unsigned.apk")
-                archiveArtifacts artifacts: "**/*-signed.apk", fingerprint: true, allowEmptyArchive: false
-            }
-        }
-        stage ('Release confirm') {
-            when { branch 'release/v*' }
+        stage ('Make release') {
+            when { branch 'release/new' }
             steps {
-                jplPromoteBuild(cfg)
-            }
-        }
-        stage ('Release finish') {
-            agent { label 'docker' }
-            when { branch 'release/v*' }
-            steps {
-                jplCloseRelease(cfg)
+                jplMakeRelease(cfg)
             }
         }
         stage ('PR Clean') {
@@ -200,19 +179,14 @@ $ sudo apt-get install default-jre default-jdk
   * Github Branch Source
   * Github Plugin
   * Git Plugin
-  * HipChat, if you want to use hipchat as notification channel
   * HTML Publisher
   * JIRA Pipeline Steps, if you want to use a JIRA project
   * Pipeline
-  * Pipeline Utility Steps, if you want to sign android APK's artifacts with jplSigning
   * Slack Notification, if you want to use Slack as notification channel
   * SonarQube Scanner, if you want to use SonerQube as quality gate with jplSonarScanner
   * Timestamper
 * Setup Jeknins in "Configuration" main menu option
   * Enable the checkbox "Environment Variables" and add the following environment variables with each integration key:
-    * APPETIZE_TOKEN
-    * APPLIVERY_TOKEN
-    * APPETIZE_TOKEN
     * JIRA_SITE
-  * Put the correct Slack, Hipchat and JIRA credentials in their place (read the howto's of the related Jenkins plugins)
+  * Put the correct Slack and JIRA credentials in their place (read the howto's of the related Jenkins plugins)
 EOF

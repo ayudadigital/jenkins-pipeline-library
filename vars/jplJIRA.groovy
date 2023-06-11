@@ -58,7 +58,7 @@ def openIssue(cfg, summary = '', description = '') {
         echo "jpl: open jira issue in JIRA project with key: ${cfg.jira.projectKey}"
         def issueData = [fields: [
                                 project: [key: cfg.jira.projectKey],
-                                summary: jplBuild.summary(summary),
+                                summary: jplConfig.summary(summary),
                                 description: jplBuild.description(description),
                                 issuetype: [id: '1']  // type 1: bug
                                 ]]

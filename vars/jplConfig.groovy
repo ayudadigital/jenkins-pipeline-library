@@ -13,23 +13,13 @@
   * String  projectName             Project alias / codename (with no spaces)       (default: "project")
   * String  BRANCH_NAME             Branch name                                     (default: env.BRANCH_NAME)
   * String  headBranch              Head branch name                                (default: "master")
-  * String  laneName                Fastlane lane name                              (default: related to branch name)
-                                    The laneName is asigned to "[laneName]" part of the branch in case of "fastlane/[laneName]" branches
   * String  targetPlatform          Target platform, one of these                   (default: "any")
-    - "android"
-    - "ios"
-    - "hybrid"
-    - "backend"
   * boolean notify                  Automatically send notifications                (default: true)
   * String  archivePattern          Atifacts archive pattern
-    Defaults
-      - Android:  "** / *.apk"
-      - iOS:      "** / *.ipa"
-  * String releaseTag               Release tag for branches like "release/vX.Y.Z"  (default: related tag or "" on non-release branches)
+  * String  releaseTag              Release tag for branches like "release/vX.Y.Z"  (default: related tag or "" on non-release branches)
                                     The releaseTag for this case is "vX.Y.Z"
   * String releaseTagNumber         Release tag for branches like "release/vX.Y.Z"  (default: related tag or "" on non-release branches)
                                     only the number part. Refers to "X.Y.Z" without the starting "v"
-  * String androidPackages          SDK packages to install within docker image     (default: "build-tools-27.0.0,android-27")
   * String makeReleaseCredentialsID ID of the credentials that makeRelease function (default: 'jpl-ssh-credentials')
                                     will use. Should be SSH credentials
 
@@ -37,19 +27,7 @@
         String url                  URL                                             (default: '')
         String branch               branch                                          (default: '')
 
-  * Hashmap applivery: Applivery parameters
-        String token                Account api key                                 (default: jenkins env.APPLIVERY_TOKEN)
-        String app                  App ID                                          (default: jenkins env.APPLIVERY_APP)
-        String tags                 Tags                                            (default: '')
-        boolean notify              Send notifications                              (default: true)
-        boolean autotemove          Auto remove old builds                          (default: true)
-
-  * Hashmap appetize: Appetize parameters
-        String token                Token                                           (default: jenkins env.APPETIZE_TOKEN)
-        String app                  App                                             (default: jenkins env.APPETIZE_APP)
-  
   * Hashmap recipients: Recipients used in notifications
-        String recipients.hipchat   List of hipchat rooms, comma separated          (default: "")
         String recipients.slack     List of slack channels, comma separated         (default: "")
         String recipients.email     List of email address, comma separated          (default: "")
 
@@ -69,15 +47,9 @@
   * Hashmap changelog: Changelog building configuration
         boolean enabled             Automatically build changelog file              (default: false)
                                     * Archive as artifact build on every commit
-                                    * Build and commit on jplCloseRelease
-
-  Other options for internal use:
-  * Hashmap promoteBuild: Promote build workflow configuration
-        Integer timeoutHours        * Number of hours to wait from user input       (default: 48)
-        boolean enabled             * Flag to promote build to release steps        (default: false)
 
 */
-def call (projectName = 'project', targetPlatform = 'any', jiraProjectKey = '', recipients = [hipchat:'',slack:'',email:''], headBranch = "master") {
+def call (projectName = 'project', targetPlatform = 'any', jiraProjectKey = '', recipients = [slack:'', email:''], headBranch = "master") {
     cfg = [:]
     //
     if (env.BRANCH_NAME == null) {
@@ -88,26 +60,7 @@ def call (projectName = 'project', targetPlatform = 'any', jiraProjectKey = '', 
     }
     cfg.headBranch                                  = headBranch
     cfg.projectName                                 = projectName
-    if (cfg.BRANCH_NAME.startsWith('fastlane/')) {
-        cfg.laneName                                = cfg.BRANCH_NAME.tokenize("/")[1]
-    }
-    else {
-        cfg.laneName                                = ((cfg.BRANCH_NAME in ["staging", "quality", "master"]) || cfg.BRANCH_NAME.startsWith('release/v') || cfg.BRANCH_NAME.startsWith('hotfix/v')) ? cfg.BRANCH_NAME.tokenize("/")[0] : 'develop'
-    }
     cfg.targetPlatform                              = targetPlatform
-    switch (cfg.targetPlatform) {
-        case 'android':
-            cfg.archivePattern = '**/*.apk'
-            cfg.android = [:]
-            break;
-        case 'ios':
-            cfg.archivePattern = '**/*.ipa'
-            break;
-        default:
-            cfg.artifactsPattern = ''
-            break;
-    }
-    cfg.androidPackages                             = 'build-tools-27.0.0,android-27'
     cfg.releaseTag                                  = (cfg.BRANCH_NAME.startsWith('release/v') || cfg.BRANCH_NAME.startsWith('hotfix/v')) ? cfg.BRANCH_NAME.tokenize("/")[1] : ""
     cfg.releaseTagNumber                            = (cfg.BRANCH_NAME.startsWith('release/v') || cfg.BRANCH_NAME.startsWith('hotfix/v')) ? cfg.BRANCH_NAME.tokenize("/")[1].substring(1) : ""
     cfg.makeReleaseCredentialsID                    = "jpl-ssh-credentials"
@@ -118,23 +71,9 @@ def call (projectName = 'project', targetPlatform = 'any', jiraProjectKey = '', 
         cfg.repository.branch = ''
 
     //
-    cfg.applivery = [:]
-        cfg.applivery.token                         = (env.APPLIVERY_TOKEN == null) ? '' : env.APPLIVERY_TOKEN
-        cfg.applivery.app                           = (env.APPLIVERY_APP   == null) ? '' : env.APPLIVERY_APP
-        cfg.applivery.tags                          = ''
-        cfg.applivery.notify                        = true
-        cfg.applivery.autoremove                    = true
-
-    //
-    cfg.appetize = [:]
-        cfg.appetize.token                          = (env.APPETIZE_TOKEN == null) ? '' : env.APPETIZE_TOKEN
-        cfg.appetize.app                            = (env.APPETIZE_APP   == null) ? '' : env.APPETIZE_APP
-    
-    //
     cfg.notify                                      = true
     cfg.recipients                                  = recipients
     cfg.recipients.slack = cfg.recipients.slack ?: ''
-    cfg.recipients.hipchat = cfg.recipients.hipchat ?: ''
     cfg.recipients.email = cfg.recipients.email ?: ''
 
     //
@@ -161,15 +100,11 @@ def call (projectName = 'project', targetPlatform = 'any', jiraProjectKey = '', 
 
     //
     cfg.dockerFunctionPrefix                        = "docker run -i --rm "
-    cfg.promoteBuild                                = [:]
-        cfg.promoteBuild.enabled                    = false
-        cfg.promoteBuild.timeoutHours               = 48
 
     //
     cfg.flags = [:]
         cfg.flags.isJplConfigured                   = true
         cfg.flags.isJplStarted                      = false
-        cfg.flags.isAndroidImageBuilded             = false
         cfg.flags.wereScriptsDownloaded             = false
 
     //-----------------------------------------//
@@ -199,4 +134,49 @@ def checkInitializationStatus(cfg) {
     if (!cfg.flags.isJplConfigured) {
         error ("ERROR: You should call to jplConfig first")
     }
+}
+
+
+def getBuildTimeout(cfg, String project = 'generic') {
+    switch (action) {
+        case 'GetRequestInfo':
+            job = "/Operations/operation_catalog/tools/sm/get"
+            break
+        case 'GetRequestsByGroup':
+            job = "/Operations/operation_catalog/tools/sm/get_group_requests"
+            break
+        case 'AssignRequestedOperator':
+            job = "/Operations/operation_catalog/tools/sm/assign_requested_operator"
+            break
+        case 'ResolveRequest':
+            job = "/Operations/operation_catalog/tools/sm/resolve_request"
+            break
+    }
+}
+
+/**
+  Return result status of current build
+  Return "SUCCESS" on unknown case
+*/
+def resultStatus() {
+    return (currentBuild.result == null ? 'SUCCESS' : currentBuild.result)
+}
+/**
+  Return branch info of current job (blank if none)
+  Used in issues and notifications
+ */
+def branchInfo() {
+    return (env.BRANCH_NAME == null ? '' : " (branch ${env.BRANCH_NAME})")
+}
+/**
+  Summary field for issues and notifications
+ */
+def summary(summary = '') {
+    return (summary == '' ? "Job [${env.JOB_NAME}] [#${env.BUILD_NUMBER}] finished with ${this.resultStatus()}${this.branchInfo()}" : summary)
+}
+/**
+  Description text for issues and notifications
+ */
+def description(description = '') {
+    return (description == '' ? "View details on ${env.BUILD_URL}console" : description)
 }

@@ -1,7 +1,6 @@
 #!groovy
 env.BRANCH_NAME = "release/v9.9.9"
 cfg = jplConfig("jplMakeReleaseHappyTest", "groovy")
-cfg.promoteBuild.enabled = true
 
 pipeline {
 
