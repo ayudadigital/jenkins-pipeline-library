@@ -21,7 +21,7 @@ Then you can use the helpers in your script
 
 TBD
 
-* Declarative Pipeline example (Android)
+* Declarative Pipeline example (backend)
 
 ```groovy
 #!groovy
@@ -29,7 +29,7 @@ TBD
 @Library('github.com/ayudadigital/jenkins-pipeline-library') _
 
 // Initialize cfg
-cfg = jplConfig('project-alias', 'android', 'JIRAPROJECTKEY', [hipchat:'The-Project,Jenkins QA', slack:'#the-project,#integrations', email:'the-project@example.com,dev-team@example.com,qa-team@example.com'])
+cfg = jplConfig('project-alias', 'backend', 'JIRAPROJECTKEY', [slack:'#the-project,#integrations', email:'the-project@example.com,dev-team@example.com,qa-team@example.com'])
 
 // The pipeline
 pipeline {
@@ -49,12 +49,6 @@ pipeline {
                 jplDockerPush(cfg, 'the-project/docker-image', 'https://registry.hub.docker.com', 'dockerhub-credentials', 'dockerfile-path')
             }
         }
-        stage ('Build') {
-            agent { label 'docker' }
-            steps  {
-                jplBuild(cfg)
-            }
-        }
         stage('Test') {
             agent { label 'docker' }
             when { expression { (env.BRANCH_NAME == 'develop') || env.BRANCH_NAME.startsWith('PR-') } }
@@ -62,25 +56,10 @@ pipeline {
                 jplSonarScanner(cfg)
             }
         }
-        stage ('Sign') {
-            agent { label 'docker' }
-            when { branch 'release/v*' }
-            steps  {
-                jplSigning(cfg, "git@github.org:the-project/sign-repsotory.git", "the-project", "app/build/outputs/apk/the-project-unsigned.apk")
-                archiveArtifacts artifacts: "**/*-signed.apk", fingerprint: true, allowEmptyArchive: false
-            }
-        }
-        stage ('Release confirm') {
-            when { branch 'release/v*' }
+        stage ('Make release') {
+            when { branch 'release/new' }
             steps {
-                jplPromoteBuild(cfg)
-            }
-        }
-        stage ('Release finish') {
-            agent { label 'docker' }
-            when { branch 'release/v*' }
-            steps {
-                jplCloseRelease(cfg)
+                jplMakeRelease(cfg)
             }
         }
         stage ('PR Clean') {
@@ -110,52 +89,6 @@ pipeline {
 
 ## Helpers set
 
-### jplAppetizeUpload
-
-Upload package to appetize
-
-Parameters:
-
-* cfg jplConfig class object
-* String packageFile File name to upload
-* String app App ID
-* String token Appetize token
-
-cfg usage:
-
-* cfg.appetize[:] hashmap
-
-### jplAppliveryUpload
-
-Upload package to applivery
-
-Parameters:
-
-* cfg jplConfig class object
-* String packageFile File name to upload. Should be an iOS / Android app artifact.
-* String app App id
-* String token Applivery account token
-
-cfg usage:
-
-* cfg.applivery[:] hashmap
-* cfg.releaseTag
-
-### jplBuildAPK
-
-Build APK with Fastlane within docker into Jenkins, based on jpl project configuration
-
-Parameters:
-
-* cfg jplConfig class object
-* string command What is the command to be executed in the build
-Example: "./gradlew clean assembleDebug"
-
-cfg usage:
-
-* cfg.archivePattern
-* cfg.flags.isAndroidImageBuilded
-
 ### jplBuildChangelog
 
   Build changelog file based on the commit messages
@@ -174,59 +107,6 @@ cfg usage:
   Review https://github.com/ayudadigital/docker-command-launcher project
 
 
-### jplBuild
-
-Build iOS / Android app with Fastlane
-
-- Android app will build using docker into Jenkins
-- iOS app will build with fastlane directly
-
-Both builds are based on jpl project configuration
-
-Parameters:
-
-* cfg jplConfig class object
-* string command What is the command to be executed in the build
-
-Example: "./gradlew clean assembleDebug"
-
-cfg usage:
-
-* cfg.targetPlatform
-
-### jplBuildIPA
-
-Build IPA with Fastlane based on jpl project configuration
-
-Parameters:
-
-* cfg jplConfig class object
-* string command What's' the command to be executed in the build
-Example: "fastlane test"
-
-cfg usage:
-
-* cfg.archivePattern
-
-### jplCloseRelease
-
-Close release (Branches "release/v*" or "hotfix/v*")
-
-Merge code from release/vX.Y.Z to the head and "develop" branches, then "push" to the repository.
-Create new tag with "vX.Y.Z" to the commit
-
-The function uses "git promote" script
-
-Fails if your repository is not in a "release/v*" nor "hotfix/v*" branch
-
-Parameters:
-* cfg jplConfig class object
-
-cfg usage:
-
-* cfg.notify
-* cfg.recipients
-
 ### jplConfig
 
   Global config variables
@@ -243,23 +123,13 @@ cfg usage:
   * String  projectName             Project alias / codename (with no spaces)       (default: "project")
   * String  BRANCH_NAME             Branch name                                     (default: env.BRANCH_NAME)
   * String  headBranch              Head branch name                                (default: "master")
-  * String  laneName                Fastlane lane name                              (default: related to branch name)
-                                    The laneName is asigned to "[laneName]" part of the branch in case of "fastlane/[laneName]" branches
   * String  targetPlatform          Target platform, one of these                   (default: "any")
-    - "android"
-    - "ios"
-    - "hybrid"
-    - "backend"
   * boolean notify                  Automatically send notifications                (default: true)
   * String  archivePattern          Atifacts archive pattern
-    Defaults
-      - Android:  "** / *.apk"
-      - iOS:      "** / *.ipa"
-  * String releaseTag               Release tag for branches like "release/vX.Y.Z"  (default: related tag or "" on non-release branches)
+  * String  releaseTag              Release tag for branches like "release/vX.Y.Z"  (default: related tag or "" on non-release branches)
                                     The releaseTag for this case is "vX.Y.Z"
   * String releaseTagNumber         Release tag for branches like "release/vX.Y.Z"  (default: related tag or "" on non-release branches)
                                     only the number part. Refers to "X.Y.Z" without the starting "v"
-  * String androidPackages          SDK packages to install within docker image     (default: "build-tools-27.0.0,android-27")
   * String makeReleaseCredentialsID ID of the credentials that makeRelease function (default: 'jpl-ssh-credentials')
                                     will use. Should be SSH credentials
 
@@ -267,19 +137,7 @@ cfg usage:
         String url                  URL                                             (default: '')
         String branch               branch                                          (default: '')
 
-  * Hashmap applivery: Applivery parameters
-        String token                Account api key                                 (default: jenkins env.APPLIVERY_TOKEN)
-        String app                  App ID                                          (default: jenkins env.APPLIVERY_APP)
-        String tags                 Tags                                            (default: '')
-        boolean notify              Send notifications                              (default: true)
-        boolean autotemove          Auto remove old builds                          (default: true)
-
-  * Hashmap appetize: Appetize parameters
-        String token                Token                                           (default: jenkins env.APPETIZE_TOKEN)
-        String app                  App                                             (default: jenkins env.APPETIZE_APP)
-  
   * Hashmap recipients: Recipients used in notifications
-        String recipients.hipchat   List of hipchat rooms, comma separated          (default: "")
         String recipients.slack     List of slack channels, comma separated         (default: "")
         String recipients.email     List of email address, comma separated          (default: "")
 
@@ -299,12 +157,6 @@ cfg usage:
   * Hashmap changelog: Changelog building configuration
         boolean enabled             Automatically build changelog file              (default: false)
                                     * Archive as artifact build on every commit
-                                    * Build and commit on jplCloseRelease
-
-  Other options for internal use:
-  * Hashmap promoteBuild: Promote build workflow configuration
-        Integer timeoutHours        * Number of hours to wait from user input       (default: 48)
-        boolean enabled             * Flag to promote build to release steps        (default: false)
 
 
 ### jplDockerBuild
@@ -378,7 +230,7 @@ The function will:
 Abort the build if:
 
 - The repository is on the "develop" branch. Or...
-- The promoteBuild.enabled flag is not true
+- The promoteBuild.enabled flag is not true (DEPRECATED: always promote build)
 
 You can use this function with a branch named "release/next", so it will do all the job for you when you do a push to the repository.
 
@@ -395,7 +247,7 @@ cfg usage:
 
 ### jplNotify
 
-Notify using multiple methods: hipchat, slack, email
+Notify using multiple methods: slack, email
 
 Parameters:
 
@@ -429,69 +281,6 @@ Place the jplPostBuild(cfg) line into the "post" block of the pipeline like this
         }
     }
 
-### jplPromoteBuild
-
-Promote build to next steps, waiting for user input
-
-Parameters:
-
-* cfg jplConfig class object
-* String message User input message, defaults to "Promote Build"
-* String description User input description, defaults to "Check to promote the build, leave uncheck to finish the build without promote"
-
-cfg usage:
-
-* cfg.promoteBuild
-
-### jplPromoteCode
-
-Promote code on release
-
-Merge code from upstream branch to downstream branch, then make "push" to the repository
-
-The function uses "git promote" script of https://github.com/red-panda-ci/git-promote
-
-Parameters:
-
-* cfg jplConfig class object
-* String updateBranch The branch "source" of the merge
-* String downstreamBranch The branch "target" of the merge
-
-### jplSigning
-
-App signing management
-
-Parameters:
-
-* cfg jplConfig class object
-* String signingRepository The repository (github, bitbucket, whatever) where the signing information lives
-* String signingPath Relative path to locate the signing data within signing repository
-* String artifactPath Path to the artifact file to be signed, relative form the build workspace
-
-cfg usage:
-
-* cfg.projectName
-
-Notes:
-
-* The artifactPath must be an unsigned APK, it's name should match the pattern "*-unsigned.apk"
-* Your Jenkins instance must have read access to the repository containing signing data
-* The signed artifact will be placed on the same route of the artifact to be signed, and named "*-signed.apk"
-* The repository structure sould be like this:
-
-    * Must have a "credentials.json" file with this content:
-
-        {
-            "STORE_PASSWORD": "store_password_value",
-            "KEY_ALIAS": "key_alias_value",
-            "KEY_PASSWORD": "key_password_value",
-            "ARTIFACT_SHA1": "D7:22:FF:...."
-        }
-
-    * Must have a "keystore.jks", as the signing keystore file
-
-    Both file should be placed in the a repository path, wich is informed with the "signingPath" parameter
-
 ### jplSonarScanner
 
 Launch SonarQube scanner
@@ -515,11 +304,6 @@ Start library activities
 
 This helper should be executed as first step of the pipeline.
 
-* Prepare some things based on the target platform:
-  * "android". Prepare the workspace to build within native Docker of the Jenkins
-  * "ios" (TBD)
-  * "hybrid" (TBD)
-  * "backend" (TBD)
 * Execute for the jplValidateCommitMessages on Pull Request, breaking the build if the messages don't complaint with the parse rules
 * Execute jplBuildChangelog and attach the CHANGELOG.html as artifact of the build
 
@@ -635,18 +419,13 @@ $ sudo apt-get install default-jre default-jdk
   * Github Branch Source
   * Github Plugin
   * Git Plugin
-  * HipChat, if you want to use hipchat as notification channel
   * HTML Publisher
   * JIRA Pipeline Steps, if you want to use a JIRA project
   * Pipeline
-  * Pipeline Utility Steps, if you want to sign android APK's artifacts with jplSigning
   * Slack Notification, if you want to use Slack as notification channel
   * SonarQube Scanner, if you want to use SonerQube as quality gate with jplSonarScanner
   * Timestamper
 * Setup Jeknins in "Configuration" main menu option
   * Enable the checkbox "Environment Variables" and add the following environment variables with each integration key:
-    * APPETIZE_TOKEN
-    * APPLIVERY_TOKEN
-    * APPETIZE_TOKEN
     * JIRA_SITE
-  * Put the correct Slack, Hipchat and JIRA credentials in their place (read the howto's of the related Jenkins plugins)
+  * Put the correct Slack and JIRA credentials in their place (read the howto's of the related Jenkins plugins)

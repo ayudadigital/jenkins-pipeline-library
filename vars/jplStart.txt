@@ -3,11 +3,6 @@ Start library activities
 
 This helper should be executed as first step of the pipeline.
 
-* Prepare some things based on the target platform:
-  * "android". Prepare the workspace to build within native Docker of the Jenkins
-  * "ios" (TBD)
-  * "hybrid" (TBD)
-  * "backend" (TBD)
 * Execute for the jplValidateCommitMessages on Pull Request, breaking the build if the messages don't complaint with the parse rules
 * Execute jplBuildChangelog and attach the CHANGELOG.html as artifact of the build
 

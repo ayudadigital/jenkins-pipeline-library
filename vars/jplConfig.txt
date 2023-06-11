@@ -13,23 +13,13 @@
   * String  projectName             Project alias / codename (with no spaces)       (default: "project")
   * String  BRANCH_NAME             Branch name                                     (default: env.BRANCH_NAME)
   * String  headBranch              Head branch name                                (default: "master")
-  * String  laneName                Fastlane lane name                              (default: related to branch name)
-                                    The laneName is asigned to "[laneName]" part of the branch in case of "fastlane/[laneName]" branches
   * String  targetPlatform          Target platform, one of these                   (default: "any")
-    - "android"
-    - "ios"
-    - "hybrid"
-    - "backend"
   * boolean notify                  Automatically send notifications                (default: true)
   * String  archivePattern          Atifacts archive pattern
-    Defaults
-      - Android:  "** / *.apk"
-      - iOS:      "** / *.ipa"
-  * String releaseTag               Release tag for branches like "release/vX.Y.Z"  (default: related tag or "" on non-release branches)
+  * String  releaseTag              Release tag for branches like "release/vX.Y.Z"  (default: related tag or "" on non-release branches)
                                     The releaseTag for this case is "vX.Y.Z"
   * String releaseTagNumber         Release tag for branches like "release/vX.Y.Z"  (default: related tag or "" on non-release branches)
                                     only the number part. Refers to "X.Y.Z" without the starting "v"
-  * String androidPackages          SDK packages to install within docker image     (default: "build-tools-27.0.0,android-27")
   * String makeReleaseCredentialsID ID of the credentials that makeRelease function (default: 'jpl-ssh-credentials')
                                     will use. Should be SSH credentials
 
@@ -37,19 +27,7 @@
         String url                  URL                                             (default: '')
         String branch               branch                                          (default: '')
 
-  * Hashmap applivery: Applivery parameters
-        String token                Account api key                                 (default: jenkins env.APPLIVERY_TOKEN)
-        String app                  App ID                                          (default: jenkins env.APPLIVERY_APP)
-        String tags                 Tags                                            (default: '')
-        boolean notify              Send notifications                              (default: true)
-        boolean autotemove          Auto remove old builds                          (default: true)
-
-  * Hashmap appetize: Appetize parameters
-        String token                Token                                           (default: jenkins env.APPETIZE_TOKEN)
-        String app                  App                                             (default: jenkins env.APPETIZE_APP)
-  
   * Hashmap recipients: Recipients used in notifications
-        String recipients.hipchat   List of hipchat rooms, comma separated          (default: "")
         String recipients.slack     List of slack channels, comma separated         (default: "")
         String recipients.email     List of email address, comma separated          (default: "")
 
@@ -69,11 +47,5 @@
   * Hashmap changelog: Changelog building configuration
         boolean enabled             Automatically build changelog file              (default: false)
                                     * Archive as artifact build on every commit
-                                    * Build and commit on jplCloseRelease
-
-  Other options for internal use:
-  * Hashmap promoteBuild: Promote build workflow configuration
-        Integer timeoutHours        * Number of hours to wait from user input       (default: 48)
-        boolean enabled             * Flag to promote build to release steps        (default: false)
 
 

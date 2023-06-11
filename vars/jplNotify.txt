@@ -1,5 +1,5 @@
 
-Notify using multiple methods: hipchat, slack, email
+Notify using multiple methods: slack, email
 
 Parameters:
 
