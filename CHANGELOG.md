@@ -1,5 +1,27 @@
 # Changelog
 
+## v7.1.0 (2023-10-08)
+
+### Changes
+
+#### Upgrade
+
+* Change master branch references to main ([a6c19f5](https://github.com/ayudadigital/jenkins-pipeline-library/commit/a6c19f5))
+
+#### Build
+
+* Update Auto Release Log adding v7.1.0 info with JPL ([f8a7118](https://github.com/ayudadigital/jenkins-pipeline-library/commit/f8a7118))
+* Use main branch instead master for new releases ([1462f41](https://github.com/ayudadigital/jenkins-pipeline-library/commit/1462f41))
+
+#### Docs
+
+* Update README.md and Jenkins doc help files ([07a75ce](https://github.com/ayudadigital/jenkins-pipeline-library/commit/07a75ce))
+* Generate v7.0.0 changelog with JPL ([e87e017](https://github.com/ayudadigital/jenkins-pipeline-library/commit/e87e017))
+
+### Authors
+
+* Pedro Amador
+
 ## v7.0.0 (2023-06-11)
 
 ### Changes
