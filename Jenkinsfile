@@ -3,7 +3,7 @@
 @Library('jenkins-pipeline-library') _
 
 // Initialize global config
-cfg = jplConfig('jpl', 'groovy', '', [email: env.CI_NOTIFY_EMAIL_TARGETS])
+cfg = jplConfig('jpl', 'groovy', '', [email: env.CI_NOTIFY_EMAIL_TARGETS], 'main')
 
 def publishDocumentation() {
     sshagent (credentials: [cfg.makeReleaseCredentialsID]) {
