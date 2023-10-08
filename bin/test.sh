@@ -97,9 +97,9 @@ for item in jenkins-dind jenkins-agent1 jenkins-agent2; do
         runWithinDocker ${item} "cd /tmp/jenkins-pipeline-library && git add -A && git commit -m 'test within docker'"
     fi
     runWithinDocker ${item} "cd /tmp/jenkins-pipeline-library && git rev-parse --verify develop || git checkout -b develop"
-    runWithinDocker ${item} "cd /tmp/jenkins-pipeline-library && git rev-parse --verify master || git checkout -b master"
+    runWithinDocker ${item} "cd /tmp/jenkins-pipeline-library && git rev-parse --verify main || git checkout -b main"
     runWithinDocker ${item} "cd /tmp/jenkins-pipeline-library && git branch -D release/new || true"
-    runWithinDocker ${item} "cd /tmp/jenkins-pipeline-library && git checkout -b 'release/v9.9.9' && git checkout -b 'hotfix/v9.9.9-hotfix-1' && git checkout -b 'jpl-test-promoted' && git checkout -b 'jpl-test' && git checkout -b 'release/new' && git checkout `git rev-parse HEAD` > /dev/null 2>&1"
+    runWithinDocker ${item} "cd /tmp/jenkins-pipeline-library && git checkout -b 'release/v999.9.9' && git checkout -b 'hotfix/v999.9.9-hotfix-1' && git checkout -b 'jpl-test-promoted' && git checkout -b 'jpl-test' && git checkout -b 'release/new' && git checkout `git rev-parse HEAD` > /dev/null 2>&1"
 done
 
 echo "# Waiting for jenkins service to be initialized"

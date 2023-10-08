@@ -1,6 +1,6 @@
 #!groovy
-env.BRANCH_NAME = "release/v9.9.9"
-cfg = jplConfig("jplMakeReleaseHappyTest", "groovy")
+env.BRANCH_NAME = "release/v999.9.9"
+cfg = jplConfig("jplMakeReleaseHappyTest", "groovy", '', [slack:'', email:''], 'main')
 
 pipeline {
 
@@ -18,7 +18,7 @@ pipeline {
         stage ("jplMakeRelease Test - Prepare test") {
             steps {
                 echo "jplMakeRelease Test - Prepare test"
-                sh "git checkout release/new; git merge origin/master"
+                sh "git checkout release/new; git merge origin/main"
             }
         }
         stage ("jplMakeRelease Test - Make Release") {

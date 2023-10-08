@@ -21,7 +21,7 @@ Library with a set of helpers to be used in Jenkins Scripted or Declarative Pipe
 This helpers are designed to be used in "Multibranch Pipeline" Jenkins job type, with "git flow" release cycle and at least with the following branches:
 
 * develop
-* master
+* main
 
 ## Usage
 
