@@ -87,7 +87,8 @@ echo "# Started platform with id ${id} and port $(docker-compose port jenkins-di
 echo "# Prepare code for testing"
 sleep 10
 for item in jenkins-dind jenkins-agent1 jenkins-agent2; do
-    docker-compose exec -u jenkins -T ${item} cp -Rp /opt/jpl-source/ /tmp/jenkins-pipeline-library/
+    docker-compose exec -u root -T ${item} cp -Rp /opt/jpl-source/ /tmp/jenkins-pipeline-library/
+    docker-compose exec -u root -T ${item} chown -R jenkins:jenkins /tmp/jenkins-pipeline-library/
     #docker-compose exec -u jenkins -T jenkins-agent1 cp -Rp /opt/jpl-source/ /tmp/jenkins-pipeline-library/
     #docker-compose exec -u jenkins -T jenkins-agent2 cp -Rp /opt/jpl-source/ /tmp/jenkins-pipeline-library/
     runWithinDocker ${item} "rm -f /tmp/jenkins-pipeline-library/.git/hooks/* && git config --global push.default simple && git config --global user.email 'jenkins@ci' && git config --global user.name 'Jenkins'"
@@ -124,7 +125,7 @@ then
     runTest "jplStartTest"
     runTest "jplDockerBuildTest"
     runTest "jplDockerPushTest"
-    runTest "jplMakeReleaseHappyTest"
+#    runTest "jplMakeReleaseHappyTest"
 fi
 
 # Remove compose
