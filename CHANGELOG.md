@@ -1,5 +1,29 @@
 # Changelog
 
+## v7.2.0 (2024-12-31)
+
+### Changes
+
+#### Upgrade
+
+* Use java 17 and latest plugin manager version ([18b21bf](https://github.com/ayudadigital/jenkins-pipeline-library/commit/18b21bf))
+
+#### Update
+
+* Temp disable jplMakeRelease test ([416c933](https://github.com/ayudadigital/jenkins-pipeline-library/commit/416c933))
+
+#### Build
+
+* Update Auto Release Log adding v7.2.0 info with JPL ([9f28e7c](https://github.com/ayudadigital/jenkins-pipeline-library/commit/9f28e7c))
+
+#### Docs
+
+* Generate v7.1.0 changelog with JPL ([1996353](https://github.com/ayudadigital/jenkins-pipeline-library/commit/1996353))
+
+### Authors
+
+* Pedro Amador
+
 ## v7.1.0 (2023-10-08)
 
 ### Changes
